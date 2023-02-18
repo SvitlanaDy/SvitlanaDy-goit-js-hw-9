@@ -10,9 +10,51 @@ body {
   background-color: #fafafa;
   color: #212121;
   line-height: 1.5;
+  
 }
 
 img {
   display: block;
   max-width: 100%;
+}
+
+
+#datetime-picker{
+ 
+  width:250px;
+  height:40px;
+  padding:5px;
+  font-size: 24px;
+ 
+}
+button{
+
+  font-size: 24px;
+  
+  color:rgb(6, 6, 128);
+  background-color: rgb(230, 199, 26);
+  
+}
+
+.timer{
+  display:flex;
+  gap:20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.field{
+  font-weight: 500;
+ 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.label{
+  margin-left:10px;
+  font-size: 24px;
+}
+.value{
+  font-size: 30px;
+  color: blue;
 }
