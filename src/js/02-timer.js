@@ -1,19 +1,22 @@
-import flatpickr from "flatpickr";
-import "flatpickr/dist/flatpickr.min.css";
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
 // all modules
 import Notiflix from 'notiflix';
 
+
 // const inputElement = document.getElementById
 // (datetime-picker);
-const btnStart = document.querySelector('[data-start]');
-const days =  document.querySelector('[data-days]');
-const hours = document.querySelector('[data-hours]');
-const minutes = document.querySelector('[data-minutes]');
-const seconds = document.querySelector('[data-seconds]');
-btnStart.addEventListener('click', onStart);
-btnStart.disabled = true;
+const buttonStart = document.querySelector('[data-start]');
+const showDays = document.querySelector('[data-days]');
+const showHours = document.querySelector('[data-hours]');
+const showMinutes = document.querySelector('[data-minutes]');
+const showSeconds = document.querySelector('[data-seconds]');
 
-let timerId = null;
+// buttonStart.addEventListener('click', onStart);
+// button is disabled before choosing the date in calendar
+buttonStart.disabled = true;
+
+let timer = null;
 
 const options = {
     enableTime: true,
@@ -21,36 +24,40 @@ const options = {
     defaultDate: new Date(),
     minuteIncrement: 1,
 
+      // check: is the choosed date not older than current
+
     onClose(selectedDates) {
       console.log(selectedDates[0]);
       
       if (selectedDates[0] < options.defaultDate){
         Notiflix.Notify.failure('Please choose a date in the future');
-        return btnStart.disabled = true;;
+       buttonStart.disabled = true;
+
       } 
-      else 
-      btnStart.disabled = false;
-      targetTime = selectedDates[0];
+      else buttonStart.disabled = false;
+      // targetTime = selectedDates[0];
     },
   };
   
+  // events after click of start button
+buttonStart.addEventListener('click', onStart); 
+
   function onStart() {
+    const targetTime = new Date(calendar.selectedDates[0]).getTime();
     
-    btnStart.disabled = true;
-    timerId = setInterval(() => {
-    
-      const targetTime = new Date(calendar.selectedDates[0]).getTime();
+    timer = setInterval(() => {
+      buttonStart.disabled = true;
       const currentTime = Date.now();
       const countdown = targetTime - currentTime;
       console.log(countdown);
       if (countdown <= 0) {
-        clearInterval(timerId);
+        clearInterval(timer);
         Notiflix.Notify.info('Your time is out!');
-        btnStart.disabled = false;
+        buttonStart.disabled = false;
       } else {
         const { days, hours, minutes, seconds } = convertMs(countdown);
         console.log(`${days}:${hours}:${minutes}:${seconds}`);
-        updateClockFace({ days, hours, minutes, seconds });
+        updateClockOnPage({ days, hours, minutes, seconds });
       }
     }, 1000);
 }
@@ -85,11 +92,11 @@ const options = {
   function addLeadingZero(value) {
     return String(value).padStart(2, '0');
   }
-  function updateClockFace({ days, hours, minutes, seconds }) {
-    days.textContent = `${days}`;
-    hours.textContent = `${hours}`;
-    minutes.textContent = `${minutes}`;
-    seconds.textContent = `${seconds}`;
+  function updateClockOnPage({ days, hours, minutes, seconds }) {
+    showDays.textContent = `${days}`;
+    showHours.textContent = `${hours}`;
+    showMinutes.textContent = `${minutes}`;
+    showSeconds.textContent = `${seconds}`;
   }
 
 
