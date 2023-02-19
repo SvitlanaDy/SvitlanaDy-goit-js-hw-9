@@ -3,10 +3,9 @@ import "flatpickr/dist/flatpickr.min.css";
 // all modules
 import Notiflix from 'notiflix';
 
-
 // const inputElement = document.getElementById
 // (datetime-picker);
-const btnStart = document.querySelector("button[data-start]");
+const btnStart = document.querySelector('[data-start]');
 const days =  document.querySelector('[data-days]');
 const hours = document.querySelector('[data-hours]');
 const minutes = document.querySelector('[data-minutes]');
@@ -36,6 +35,7 @@ const options = {
   };
   
   function onStart() {
+    
     btnStart.disabled = true;
     timerId = setInterval(() => {
     
@@ -81,7 +81,7 @@ const options = {
   console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
 
   const calendar = flatpickr('input[id=datetime-picker]', options);
-  
+
   function addLeadingZero(value) {
     return String(value).padStart(2, '0');
   }
